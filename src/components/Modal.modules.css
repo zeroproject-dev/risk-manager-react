@@ -23,3 +23,13 @@
 	color: white;
 	cursor: pointer;
 }
+
+@media (prefers-color-scheme: light) {
+	.modal {
+		background-color: #ffffff;
+	}
+
+	.modal__close {
+		color: black;
+	}
+}

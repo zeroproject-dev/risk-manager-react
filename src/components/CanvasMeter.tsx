@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface CanvasMeterProps {
 	meter: number;
@@ -34,9 +34,24 @@ export function CanvasMeter({
 	width = 100,
 	height = 50,
 }: CanvasMeterProps) {
+	const [textColor, setTextColor] = useState(() => {
+		const darkModePreference = window.matchMedia(
+			'(prefers-color-scheme: dark)'
+		);
+		if (darkModePreference.matches) return '#fff';
+		return '#000';
+	});
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 
 	useEffect(() => {
+		const darkModePreference = window.matchMedia(
+			'(prefers-color-scheme: dark)'
+		);
+		const onPrefChange = (e: MediaQueryListEvent) => {
+			console.log(e.matches);
+			if (e.matches) setTextColor('#fff');
+		};
+		darkModePreference.addEventListener('change', onPrefChange);
 		const canvas = canvasRef.current;
 		if (!canvas) return;
 		const ctx = canvas.getContext('2d');
@@ -47,7 +62,7 @@ export function CanvasMeter({
 		const offsetX = padding / 2;
 		const max = 25;
 
-		ctx.clearRect(0, 0, width, height);
+		ctx.clearRect(0, 0, canvas.width, height);
 
 		const gradient = ctx.createLinearGradient(
 			offsetX,
@@ -77,10 +92,14 @@ export function CanvasMeter({
 		ctx.closePath();
 
 		ctx.font = '25px Arial';
-		ctx.fillStyle = getLevelColor(meter);
+		ctx.fillStyle = textColor;
 		ctx.textAlign = 'center';
 		ctx.fillText(`${meter}`, posX, height - 25);
-	}, [meter]);
+
+		return () => {
+			darkModePreference.removeEventListener('change', onPrefChange);
+		};
+	}, [meter, textColor]);
 
 	return <canvas ref={canvasRef} width={width} height={height} />;
 }

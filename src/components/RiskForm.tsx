@@ -20,7 +20,7 @@ const createRisk = (): Risk => ({
 	consequences: '',
 	riProbability: 1,
 	riImpact: 1,
-	ri: 0,
+	ri: 1,
 	treatment: '',
 	controls: '',
 	type: 'P',
@@ -28,7 +28,7 @@ const createRisk = (): Risk => ({
 	frequency: 'D',
 	rrProbability: 1,
 	rrImpact: 1,
-	rr: 0,
+	rr: 1,
 });
 
 export function RiskForm({ onSubmitRisk }: RiskFormProps) {

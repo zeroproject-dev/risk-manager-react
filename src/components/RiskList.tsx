@@ -1,6 +1,8 @@
 import { Risk } from '../types/Risk';
 import { RiskItem } from './RiskItem';
 
+import './RiskList.modules.css';
+
 interface RiskListProps {
 	risks: Risk[];
 	onRemoveRisk: (id: string) => void;
@@ -8,7 +10,7 @@ interface RiskListProps {
 
 export function RiskList({ risks, onRemoveRisk }: RiskListProps) {
 	return (
-		<div>
+		<div className="risk__list">
 			{risks.map((risk) => (
 				<RiskItem key={risk.id} onRemoveRisk={onRemoveRisk} risk={risk} />
 			))}

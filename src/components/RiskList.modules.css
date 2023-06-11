@@ -1,0 +1,6 @@
+.risk__list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 500px));
+	place-content: center;
+	grid-gap: 1rem;
+}
