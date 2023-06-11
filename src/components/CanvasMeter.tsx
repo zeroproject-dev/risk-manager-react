@@ -18,16 +18,16 @@ const categoryColors: Category = {
 	'Muy Bajo': '#92d14f',
 };
 
-const getLevelColor = (l: number) => {
-	let level = '';
-	if (l > 19) level = 'Muy Alto';
-	else if (l > 9) level = 'Alto';
-	else if (l > 4) level = 'Medio';
-	else if (l > 2) level = 'Bajo';
-	else if (l > 0) level = 'Muy Bajo';
+// const getLevelColor = (l: number) => {
+// 	let level = '';
+// 	if (l > 19) level = 'Muy Alto';
+// 	else if (l > 9) level = 'Alto';
+// 	else if (l > 4) level = 'Medio';
+// 	else if (l > 2) level = 'Bajo';
+// 	else if (l > 0) level = 'Muy Bajo';
 
-	return categoryColors[level];
-};
+// 	return categoryColors[level];
+// };
 
 export function CanvasMeter({
 	meter,
