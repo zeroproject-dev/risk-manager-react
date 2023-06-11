@@ -39,8 +39,8 @@ function App() {
 	return (
 		<>
 			<h1>Riesgos</h1>
-			<div>
-				<RiskList risks={risks} onRemoveRisk={onRemoveRisk} />
+			<RiskList risks={risks} onRemoveRisk={onRemoveRisk} />
+			<div style={{ width: '100%' }}>
 				<button className="buttonAddNewRisk" onClick={handleClick}>
 					Agregar nuevo
 				</button>
