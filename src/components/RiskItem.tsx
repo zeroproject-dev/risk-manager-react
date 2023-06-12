@@ -32,7 +32,7 @@ export function RiskItem({ risk, onRemoveRisk }: RiskItemProps) {
 				<p className="riskItem__paragraph">Tratamiento: {risk.treatment}</p>
 				{risk.controls.map((control) => (
 					<p key={crypto.randomUUID()} className="riskItem__paragraph">
-						Controles: {control.name}
+						Control: {control.name}
 					</p>
 				))}
 
@@ -61,13 +61,10 @@ export function RiskItem({ risk, onRemoveRisk }: RiskItemProps) {
 				<div>
 					{risk.controls.map((control) => (
 						<p key={crypto.randomUUID()} className="riskItem__paragraph">
-							Controles: {control.name}
+							Control: {control.name}
 						</p>
 					))}
 				</div>
-				<h3>Riesgo residual</h3>
-				<p>Probabilidad: {risk.rrProbability}</p>
-				<p>Impacto: {risk.rrImpact}</p>
 				<p>Riesgo residual:</p>
 				<CanvasMeter meter={risk.rr} width={300} />
 			</Modal>

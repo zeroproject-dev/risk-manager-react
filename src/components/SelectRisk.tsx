@@ -3,7 +3,10 @@ interface SelectRiskProps {
 	name: string;
 	options: { value: string; tag: string; label: string }[];
 	value: string;
+
 	onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+
+	tag?: boolean;
 }
 
 export function SelectRisk({
@@ -12,6 +15,7 @@ export function SelectRisk({
 	name,
 	value,
 	options,
+	tag,
 }: SelectRiskProps) {
 	return (
 		<label>
@@ -21,7 +25,7 @@ export function SelectRisk({
 					return (
 						<option
 							key={option.tag ?? crypto.randomUUID()}
-							value={option.value}
+							value={tag ? option.tag : option.value}
 						>
 							{option.label}
 						</option>
