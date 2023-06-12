@@ -2,12 +2,7 @@ import { useState } from 'react';
 import { Control, Risk } from '../types/Risk';
 import { Fieldset } from './Fieldset';
 import { SelectRisk } from './SelectRisk';
-import {
-	frequencyOptions,
-	levelOptions,
-	selectOptions,
-	typesOptions,
-} from '../libs/Options';
+import { selectOptions } from '../libs/Options';
 import { ControlsForm } from './ControlsForm';
 
 interface RiskFormProps {
