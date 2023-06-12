@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Risk } from '../types/Risk';
+import { Control, Risk } from '../types/Risk';
 import { Fieldset } from './Fieldset';
 import { SelectRisk } from './SelectRisk';
 import {
@@ -22,17 +22,20 @@ const createRisk = (): Risk => ({
 	riImpact: 1,
 	ri: 1,
 	treatment: '',
-	controls: '',
-	type: 'P',
-	level: 'A',
-	frequency: 'D',
+	controls: [],
+	eControls: 0,
+	// type: 'P',
+	// level: 'A',
+	// frequency: 'D',
 	rrProbability: 1,
 	rrImpact: 1,
 	rr: 1,
 });
 
 export function RiskForm({ onSubmitRisk }: RiskFormProps) {
+	const [controls, setControls] = useState<Control[]>([]);
 	const [risk, setRisk] = useState<Risk>(createRisk());
+	// const [riskForm, setRiskForm] = useState<any>();
 
 	const handleSubmitRisk = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -46,13 +49,49 @@ export function RiskForm({ onSubmitRisk }: RiskFormProps) {
 		>
 	) => {
 		const { name, value } = e.target;
+		e.target.focus();
+		if (e.target.name.includes('.')) {
+			const [idx, key] = e.target.name.split('.');
+			// if (key === 'name') {
+			// 	e.target.focus({
+			// 		preventScroll: true,
+			// 	});
+			// }
+			const newControls = [...controls];
+			const newControl = {
+				...newControls[parseInt(idx)],
+				[key]: value,
+			} as Control;
+			newControls[parseInt(idx)] = newControl;
+
+			let i = 0;
+			newControls.forEach((control) => {
+				i +=
+					Number(control.level) +
+					Number(control.frequency) +
+					Number(control.type);
+			});
+
+			i /= newControls.length;
+
+			setControls(newControls);
+
+			const newRisk = {
+				...risk,
+				eControls: Math.round(i),
+				rr: risk.ri - Math.round(i),
+			};
+			setRisk(newRisk);
+			return;
+		}
+
 		const newRisk = { ...risk, [name]: value };
+		console.log(newRisk);
 
 		if (e.target instanceof HTMLSelectElement) {
 			if (name.includes('ri'))
 				newRisk.ri = newRisk.riProbability * newRisk.riImpact;
-			else if (name.includes('rr'))
-				newRisk.rr = newRisk.rrProbability * newRisk.rrImpact;
+			else if (name.includes('rr')) newRisk.rr = newRisk.ri - newRisk.eControls;
 		}
 
 		setRisk(newRisk);
@@ -125,39 +164,55 @@ export function RiskForm({ onSubmitRisk }: RiskFormProps) {
 						placeholder="Tratamiento"
 					/>
 				</label>
-				<label>
-					<textarea
-						name="controls"
-						onChange={handleChangeInput}
-						value={risk.controls}
-						placeholder="Controles"
-					/>
-				</label>
-				<SelectRisk
-					label="Tipo"
-					name="type"
-					options={typesOptions}
-					value={risk.type}
-					onChange={handleChangeInput}
-				/>
-				<SelectRisk
-					label="Nivel"
-					name="level"
-					options={levelOptions}
-					value={risk.level}
-					onChange={handleChangeInput}
-				/>
-				<SelectRisk
-					label="Frecuencia"
-					name="frequency"
-					options={frequencyOptions}
-					value={risk.frequency}
-					onChange={handleChangeInput}
-				/>
+				<button
+					type="button"
+					onClick={() =>
+						setControls([
+							...controls,
+							{ name: '', type: '1', level: '1', frequency: '1' } as Control,
+						])
+					}
+				>
+					Agregar control
+				</button>
+				{controls.map((control, idx) => (
+					<div key={crypto.randomUUID()}>
+						<label>
+							<input
+								name={`${idx}.name`}
+								onChange={handleChangeInput}
+								value={control.name}
+								placeholder="Control"
+							/>
+						</label>
+						<SelectRisk
+							label="Tipo"
+							name={`${idx}.type`}
+							options={typesOptions}
+							value={control.type}
+							onChange={handleChangeInput}
+						/>
+						<SelectRisk
+							label="Nivel"
+							name={`${idx}.level`}
+							options={levelOptions}
+							value={control.level}
+							onChange={handleChangeInput}
+						/>
+						<SelectRisk
+							label="Frecuencia"
+							name={`${idx}.frequency`}
+							options={frequencyOptions}
+							value={control.frequency}
+							onChange={handleChangeInput}
+						/>
+					</div>
+				))}
+				<small>Eficacia de control: {risk.eControls}</small>
 			</Fieldset>
 
 			<Fieldset title="Riesgo Residual">
-				<SelectRisk
+				{/* <SelectRisk
 					label="Impacto"
 					name="rrImpact"
 					options={selectOptions}
@@ -170,7 +225,7 @@ export function RiskForm({ onSubmitRisk }: RiskFormProps) {
 					options={selectOptions}
 					value={risk.rrProbability.toString()}
 					onChange={handleChangeInput}
-				/>
+				/> */}
 				<label>
 					<input
 						type="number"

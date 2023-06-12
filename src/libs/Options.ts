@@ -1,30 +1,30 @@
 export const selectOptions = [
-	{ value: '1', label: 'Muy Bajo' },
-	{ value: '2', label: 'Bajo' },
-	{ value: '3', label: 'Medio' },
-	{ value: '4', label: 'Alto' },
-	{ value: '5', label: 'Muy Alto' },
+	{ value: '1', tag: '', label: 'Muy Bajo' },
+	{ value: '2', tag: '', label: 'Bajo' },
+	{ value: '3', tag: '', label: 'Medio' },
+	{ value: '4', tag: '', label: 'Alto' },
+	{ value: '5', tag: '', label: 'Muy Alto' },
 ];
 
 export const typesOptions = [
-	{ value: 'P', label: 'Preventivo' },
-	{ value: 'D', label: 'Detectivo' },
-	{ value: 'C', label: 'Correctivo' },
-	{ value: 'Di', label: 'Disuasivo' },
+	{ value: '3', tag: 'P', label: 'Preventivo' },
+	{ value: '2', tag: 'D', label: 'Detectivo' },
+	{ value: '1', tag: 'C', label: 'Correctivo' },
+	{ value: '1', tag: 'Di', label: 'Disuasivo' },
 ];
 
 export const levelOptions = [
-	{ value: 'A', label: 'Automático' },
-	{ value: 'S', label: 'Semiautomático' },
-	{ value: 'M', label: 'Manual' },
+	{ value: '3', tag: 'A', label: 'Automático' },
+	{ value: '2', tag: 'S', label: 'Semiautomático' },
+	{ value: '1', tag: 'M', label: 'Manual' },
 ];
 
 export const frequencyOptions = [
-	{ value: 'D', label: 'Diario' },
-	{ value: 'S', label: 'Semanal' },
-	{ value: 'M', label: 'Mensual' },
-	{ value: 'A', label: 'Anual' },
-	{ value: 'PT', label: 'Por transacción' },
-	{ value: 'm', label: 'Masivo' },
-	{ value: 's', label: 'Semestral' },
+	{ value: '3', tag: 'D', label: 'Diario' },
+	{ value: '3', tag: 'S', label: 'Semanal' },
+	{ value: '2', tag: 'M', label: 'Mensual' },
+	{ value: '1', tag: 'A', label: 'Anual' },
+	{ value: '3', tag: 'PT', label: 'Por transacción' },
+	{ value: '3', tag: 'm', label: 'Masivo' },
+	{ value: '2', tag: 's', label: 'Semestral' },
 ];

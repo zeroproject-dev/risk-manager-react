@@ -30,7 +30,12 @@ export function RiskItem({ risk, onRemoveRisk }: RiskItemProps) {
 					Consecuencias: {risk.consequences}
 				</p>
 				<p className="riskItem__paragraph">Tratamiento: {risk.treatment}</p>
-				<p className="riskItem__paragraph">Controles: {risk.controls}</p>
+				{risk.controls.map((control) => (
+					<p key={crypto.randomUUID()} className="riskItem__paragraph">
+						Controles: {control.name}
+					</p>
+				))}
+
 				<p className="riskItem__paragraph">
 					Ri:
 					<CanvasMeter meter={risk.ri} />
@@ -53,10 +58,13 @@ export function RiskItem({ risk, onRemoveRisk }: RiskItemProps) {
 				<CanvasMeter meter={risk.ri} width={300} />
 				<h3>Mitigación y control</h3>
 				<p>Tratamiento: {risk.treatment}</p>
-				<p>Controles: {risk.controls}</p>
-				<p>Tipo: {risk.type}</p>
-				<p>Nivel: {risk.level}</p>
-				<p>Frecuencia: {risk.frequency}</p>
+				<div>
+					{risk.controls.map((control) => (
+						<p key={crypto.randomUUID()} className="riskItem__paragraph">
+							Controles: {control.name}
+						</p>
+					))}
+				</div>
 				<h3>Riesgo residual</h3>
 				<p>Probabilidad: {risk.rrProbability}</p>
 				<p>Impacto: {risk.rrImpact}</p>
